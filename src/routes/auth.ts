@@ -4,7 +4,7 @@ import { UserModel } from '../types';
 
 const router = express.Router();
 
-router.get('/auth', async (req, res) => {
+router.post('/auth', async (req, res) => {
   try {
     const user: UserModel | null = await User.findOne({ where: { user: req.body.user } });
     if (user && req.body.password === user['password']) {

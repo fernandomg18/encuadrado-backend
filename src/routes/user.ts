@@ -50,7 +50,7 @@ router.get('/user/:id/appointments', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const appointments = await Appointment.findAll({ where: { id } });
+    const appointments = await Appointment.findAll({ where: { user_id: id } });
     res.json(appointments);
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while fetching appointments.' });

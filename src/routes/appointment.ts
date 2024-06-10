@@ -33,20 +33,14 @@ router.post('/appointment', async (req, res) => {
   }
 });
 
-router.put('/appointment/status/:id', async (req, res) => {
-  const { status } = req.body;
+router.put('/appointment/to-paid', async (req, res) => {
+  const { appointments_ids } = req.body;
 
   try {
-    const appointment = await Appointment.findByPk(req.params.id);
-    if (appointment) {
-      appointment.status = status;
-      await appointment.save();
-      res.json(appointment);
-    } else {
-      res.status(404).json({ error: 'Appointment not found' });
-    }
+    await Appointment.update({ status: 'paid' }, { where: { id: appointments_ids } });
+    res.json({ message: 'Appointments updated successfully.' });
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while updating the appointment.' });
+    res.status(500).json({ error: 'An error occurred while updating appointments.' });
   }
 });
 
